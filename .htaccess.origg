@@ -63,7 +63,7 @@ AddEncoding gzip svgz
 
 RewriteEngine On
 #RewriteBase /personal/applications/phppickem/
-RewriteBase /
+RewriteBase /personal/applications/phppickem/ /
 
 # 301 REDIRECTS
 # redirect 301 /links.php http://www.domain.com/api-companies.php
