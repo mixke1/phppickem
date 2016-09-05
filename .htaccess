@@ -41,9 +41,9 @@ DefaultLanguage en-US
 AddDefaultCharset UTF-8
 
 # PHP OPTIONS
-php_flag display_errors on
-php_value error_reporting 'E_ALL & ~E_NOTICE'
-php_flag register_globals off
+# php_flag display_errors on
+# php_value error_reporting 'E_ALL & ~E_NOTICE'
+# php_flag register_globals off
 # php_value memory_limit 128M
 # php_value post_max_size 2000M
 # php_value upload_max_filesize 2000M
