@@ -60,10 +60,11 @@ if (!in_array(basename($_SERVER['PHP_SELF']), $okFiles) && (empty($_SESSION['log
 	$user = $login->get_user($_SESSION['loggedInUser']);
 }
 
-if ($_SESSION['loggedInUser'] === 'admin' && $_SESSION['logged'] === 'yes') {
-	//$isAdmin = 1;
+
+if ($_SESSION['level'] >= 1 && $_SESSION['logged'] === 'yes') {
+	$isAdmin = 1;
 } else {
-	//$isAdmin = 0;
+	$isAdmin = 0;
 	//get current week
 	$currentWeek = getCurrentWeek();
 
