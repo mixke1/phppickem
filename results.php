@@ -100,8 +100,8 @@ $(document).ready(function(){
 <?php
 if (!$allScoresIn) {
 	echo '<p style="font-weight: bold; color: #DBA400;">* Not all scores have been updated for week ' . $week . ' yet.</p>' . "\n";
-	$tieBreaker = getTieBreaker($userID, $week);
-} else {$tieBreaker = abs(getMondayCombinedScore($week) - getTieBreaker($userID, $week));}
+	$tieBreaker = getTieBreaker($user->userID, $week);
+} else {$tieBreaker = abs(getMondayCombinedScore($week) - getTieBreaker($user->userID, $week));}
 
 $hideMyPicks = hidePicks($user->userID, $week);
 if ($hideMyPicks && !$weekExpired) {
@@ -143,6 +143,10 @@ if (sizeof($playerTotals) > 0) {
 				break;
 		}
 		//loop through all games
+		if (!$allScoresIn) {
+			$tieBreaker = getTieBreaker($userID, $week);
+		} else {$tieBreaker = abs(getMondayCombinedScore($week) - getTieBreaker($userID, $week));}
+
 		foreach($games as $game) {
 			$pick = '';
 			$pick = $playerPicks[$userID][$game['gameID']];
