@@ -41,5 +41,5 @@ Thumbs.db
 *.bak
 *.swp
 
-config.php
+includes/config.php
 install/
