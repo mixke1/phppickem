@@ -52,6 +52,7 @@ while ($row = $query->fetch_assoc()) {
 		$allScoresIn = false;
 	}
 }
+
 $query->free;
 
 //get array of player picks
@@ -99,7 +100,8 @@ $(document).ready(function(){
 <?php
 if (!$allScoresIn) {
 	echo '<p style="font-weight: bold; color: #DBA400;">* Not all scores have been updated for week ' . $week . ' yet.</p>' . "\n";
-}
+	$tieBreaker = getTieBreaker($userID, $week);
+} else {$tieBreaker = abs(getMondayCombinedScore($week) - getTieBreaker($userID, $week));}
 
 $hideMyPicks = hidePicks($user->userID, $week);
 if ($hideMyPicks && !$weekExpired) {
@@ -111,7 +113,7 @@ if (sizeof($playerTotals) > 0) {
 <div class="table-responsive">
 <table class="table table-striped">
 	<thead>
-		<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games); ?>">Week <?php echo $week; ?></th><th align="left">Score</th></tr>
+		<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games); ?>">Week <?php echo $week; ?></th><th class="center">Tie Breaker</th><th align="left">Score</th></tr>
 	</thead>
 	<tbody>
 <?php
@@ -148,16 +150,19 @@ if (sizeof($playerTotals) > 0) {
 				//score has been entered
 				if ($playerPicks[$userID][$game['gameID']] == $game['winnerID']) {
 					$pick = '<span class="winner">' . $pick . '</span>';
+					
 				}
 			} else {
 				//mask pick if pick and week is not locked and user has opted to hide their picks
 				$gameIsLocked = gameIsLocked($game['gameID']);
 				if (!$gameIsLocked && !$weekExpired && $hidePicks && (int)$userID !== (int)$user->userID) {
 					$pick = '***';
+					$tieBreaker = '***';
 				}
 			}
 			echo '		<td class="pickTD">' . $pick . '</td>' . "\n";
 		}
+		echo '<td class="center"> '.$tieBreaker .' </td>';
 		echo '		<td nowrap><b>' . $totalCorrect . '/' . sizeof($games) . ' (' . number_format(($totalCorrect / sizeof($games)) * 100, 2) . '%)</b></td>' . "\n";
 		echo '	</tr>' . "\n";
 		$i++;
