@@ -402,3 +402,28 @@ function getTeamStreak($teamID) {
 	}
 	$query->free;
 }
+
+function getTieBreaker($userID, $week) {
+	//get Tie-Breaker score
+	global $mysqli;
+	$sql = "select tieBreakerPoints from " . DB_PREFIX . "picksummary where userID = " . $userID . " and weekNum = " . $week;
+	$query = $mysqli->query($sql);
+	if ($query->num_rows > 0) {
+		$rstGetTiebreaker = $query->fetch_assoc();
+		return $rstGetTiebreaker['tieBreakerPoints'];
+	}
+	return 0;
+}
+
+function getMondayCombinedScore($week) {
+	global $mysqli;
+
+	$sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $week . " order by gameTimeEastern DESC limit 1";
+	$query = $mysqli->query($sql);
+	if ($query->num_rows > 0) {
+		while ($row = $query->fetch_assoc()) {
+			$combinedScore = $row['homeScore'] + $row['visitorScore'];
+		}
+	}
+	return $combinedScore;
+}
