@@ -278,7 +278,7 @@ echo '	</div>'."\n"; // end col
 echo '	</div>'."\n"; // end entry-form row
 
 //echo '<div id="comments" class="row">';
-include('includes/comments.php');
+//include('includes/comments.php');
 //echo '</div>';
 
 include('includes/footer.php');
