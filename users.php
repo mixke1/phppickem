@@ -55,13 +55,14 @@ switch ($action) {
 		$email = $_POST['email'];
 		$userName = $_POST['userName'];
 		$userID = (int)$_POST['userID'];
-
+		$isAdmin = (int)$_POST['isAdmin'];
+		
 		$my_form = new validator;
 		if($my_form->checkEmail($_POST['email'])) { // check for good mail
 			if ($my_form->validate_fields('firstname,lastname,email,userName')) { // comma delimited list of the required form fields
 				//form is valid, perform update
 				$sql = "update " . DB_PREFIX . "users ";
-				$sql .= "set firstname = '" . $firstname . "', lastname = '" . $lastname . "', email = '" . $email . "', userName = '" . $userName . "' ";
+				$sql .= "set firstname = '" . $firstname . "', lastname = '" . $lastname . "', email = '" . $email . "', userName = '" . $userName . "' , isAdmin = '" . $isAdmin . "' ";
 				$sql .= "where userID = " . $userID . ";";
 				$mysqli->query($sql) or die('error updating user');
 
@@ -107,6 +108,7 @@ if ($action == 'add' || $action == 'edit') {
 			$lastname = $row['lastname'];
 			$email = $row['email'];
 			$userName = $row['userName'];
+			$isAdmin = $row['isAdmin'];
 		} else {
 			header('Location: ' . $_SERVER['PHP_SELF']);
 			exit;
@@ -132,6 +134,10 @@ if ($action == 'add' || $action == 'edit') {
 
 <p>User Name:<br />
 <input type="text" name="userName" value="<?php echo $userName; ?>"></p>
+
+<?php if ($user->is_admin){?>
+<p>Is Admin: <input type="checkbox" name="isAdmin" value="<?php echo $isAdmin; ?>"></p>
+<?php } ?>
 
 <?php if ($action == 'add') { ?>
 <p>Password:<br />
