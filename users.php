@@ -62,7 +62,7 @@ switch ($action) {
 			if ($my_form->validate_fields('firstname,lastname,email,userName')) { // comma delimited list of the required form fields
 				//form is valid, perform update
 				$sql = "update " . DB_PREFIX . "users ";
-				$sql .= "set firstname = '" . $firstname . "', lastname = '" . $lastname . "', email = '" . $email . "', userName = '" . $userName . "' , isAdmin = '" . $isAdmin . "' ";
+				$sql .= "set firstname = '" . $firstname . "', lastname = '" . $lastname . "', email = '" . $email . "', userName = '" . $userName . "' , is_admin = '" . $isAdmin . "' ";
 				$sql .= "where userID = " . $userID . ";";
 				$mysqli->query($sql) or die('error updating user');
 
@@ -108,7 +108,7 @@ if ($action == 'add' || $action == 'edit') {
 			$lastname = $row['lastname'];
 			$email = $row['email'];
 			$userName = $row['userName'];
-			$isAdmin = $row['isAdmin'];
+			$isAdmin = $row['is_admin'];
 		} else {
 			header('Location: ' . $_SERVER['PHP_SELF']);
 			exit;
@@ -136,7 +136,7 @@ if ($action == 'add' || $action == 'edit') {
 <input type="text" name="userName" value="<?php echo $userName; ?>"></p>
 
 <?php if ($user->is_admin){?>
-<p>Is Admin: <input type="checkbox" name="isAdmin" value="<?php echo $isAdmin; ?>"></p>
+<p>Is Admin: <input type="checkbox" <?php echo ($isAdmin==1 ? 'checked' : '');?> name="isAdmin" value="<?php echo $isAdmin; ?>"></p>
 <?php } ?>
 
 <?php if ($action == 'add') { ?>
